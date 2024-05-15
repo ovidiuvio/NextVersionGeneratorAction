@@ -25,7 +25,7 @@ async function run(settings : NextVersionGeneratorSettings): Promise<void> {
 
     let nextVersion = ""
     if (lastTag.length == 0) {
-      nextVersion = `1.0.0`
+      nextVersion = `1.0.0.0`
     } else {
 
       let lastCommitsCommand = lastTag.length > 0 ? `git --no-pager log "${settings.VERSION_TAG_PREFIX}${lastTag}..HEAD" --pretty=format:"%s"` : `git --no-pager log --pretty=format:"%s"`
@@ -40,9 +40,9 @@ async function run(settings : NextVersionGeneratorSettings): Promise<void> {
       });
 
 
-      let versionPattern: RegExp = /(?<major>\d+)(?:\.(?<minor>\d+))?(?:\.(?<patch>\d+))?/;
+      let versionPattern: RegExp = /(?<major>\d+)(?:\.(?<minor>\d+))?(?:\.(?<patch>\d+))?(?:\.(?<build>\d+))?/;
       const matches: any = versionPattern.exec(lastTag);
-      let { major = 1, minor = 0, patch = 0 } : { major: number, minor: number, patch: number } = matches?.groups ?? {};
+      let { major = 1, minor = 0, patch = 0, build = 0 } : { major: number, minor: number, patch: number, build: number } = matches?.groups ?? {};
       
       var shouldBumpUpMajor = settings.MAJOR_NUMBER_PATTERN && lastCommits.some((line) => line.match(settings.MAJOR_NUMBER_PATTERN));
       var shouldBumpUpMinor = !shouldBumpUpMajor && settings.MINOR_NUMBER_PATTERN && lastCommits.some((line) => line.match(settings.MINOR_NUMBER_PATTERN));
@@ -58,7 +58,7 @@ async function run(settings : NextVersionGeneratorSettings): Promise<void> {
       } else if (shouldBumpUpPatch) {
         patch++;
       }
-      nextVersion = `${major}.${minor}.${patch}`;
+      nextVersion = `${major}.${minor}.${patch}.${build}`;
     }
 
     core.setOutput('nextVersion', nextVersion)
