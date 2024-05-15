@@ -1076,7 +1076,7 @@ function run(settings) {
             });
             let nextVersion = "";
             if (lastTag.length == 0) {
-                nextVersion = `1.0.0`;
+                nextVersion = `1.0.0.0`;
             }
             else {
                 let lastCommitsCommand = lastTag.length > 0 ? `git --no-pager log "${settings.VERSION_TAG_PREFIX}${lastTag}..HEAD" --pretty=format:"%s"` : `git --no-pager log --pretty=format:"%s"`;
@@ -1088,9 +1088,9 @@ function run(settings) {
                         }
                     }
                 });
-                let versionPattern = /(?<major>\d+)(?:\.(?<minor>\d+))?(?:\.(?<patch>\d+))?/;
+                let versionPattern = /(?<major>\d+)(?:\.(?<minor>\d+))?(?:\.(?<patch>\d+))?(?:\.(?<build>\d+))?/;
                 const matches = versionPattern.exec(lastTag);
-                let { major = 1, minor = 0, patch = 0 } = (_a = matches === null || matches === void 0 ? void 0 : matches.groups) !== null && _a !== void 0 ? _a : {};
+                let { major = 1, minor = 0, patch = 0, build = 0 } = (_a = matches === null || matches === void 0 ? void 0 : matches.groups) !== null && _a !== void 0 ? _a : {};
                 var shouldBumpUpMajor = settings.MAJOR_NUMBER_PATTERN && lastCommits.some((line) => line.match(settings.MAJOR_NUMBER_PATTERN));
                 var shouldBumpUpMinor = !shouldBumpUpMajor && settings.MINOR_NUMBER_PATTERN && lastCommits.some((line) => line.match(settings.MINOR_NUMBER_PATTERN));
                 var shouldBumpUpPatch = !shouldBumpUpMinor && settings.PATCH_NUMBER_PATTERN && lastCommits.some((line) => line.match(settings.PATCH_NUMBER_PATTERN));
@@ -1106,7 +1106,7 @@ function run(settings) {
                 else if (shouldBumpUpPatch) {
                     patch++;
                 }
-                nextVersion = `${major}.${minor}.${patch}`;
+                nextVersion = `${major}.${minor}.${patch}.${build}`;
             }
             core.setOutput('nextVersion', nextVersion);
             if (settings.OUTPUT_ENV_VARIABLE) {
