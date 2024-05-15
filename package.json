@@ -1,5 +1,5 @@
 {
-  "name": "VsixPublisherAction",
+  "name": "NextVersionGeneratorAction",
   "version": "1.0.0",
   "description": "GithubAction for generating next version number based on the git log and message patterns",
   "main": "lib/main.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cezarypiatek/VsixPublisherAction.git"
+    "url": "git+https://github.com/ovidiuvio/NextVersionGeneratorAction.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/cezarypiatek/VsixPublisherAction/issues"
+    "url": "https://github.com/ovidiuvio/NextVersionGeneratorAction/issues"
   },
-  "homepage": "https://github.com/cezarypiatek/VsixPublisherAction#readme",
+  "homepage": "https://github.com/ovidiuvio/NextVersionGeneratorAction#readme",
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/exec": "^1.0.3",
